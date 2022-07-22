@@ -14,6 +14,7 @@
 		DE15E66828604279003DD2F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */; };
 		DFC51027287D48CC003D26B0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC51026287D48CC003D26B0 /* BaseViewController.swift */; };
 		DFC5102C287D4CC8003D26B0 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC5102B287D4CC8003D26B0 /* ReviewTableViewCell.swift */; };
+		DFD8A5B3288ADD4300EB20D4 /* KoreanAutomata.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8A5B2288ADD4300EB20D4 /* KoreanAutomata.swift */; };
 		DFE6D8D1287EBD2800A45033 /* BasePaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE6D8D0287EBD2800A45033 /* BasePaddingLabel.swift */; };
 		DFE6D8D3287EBD9C00A45033 /* ReviewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE6D8D2287EBD9C00A45033 /* ReviewListView.swift */; };
 		E11AAD6C287D4E11001B1F96 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AAD6B287D4E11001B1F96 /* KeyboardViewController.swift */; };
@@ -30,6 +31,7 @@
 		DE15E66928604279003DD2F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DFC51026287D48CC003D26B0 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		DFC5102B287D4CC8003D26B0 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
+		DFD8A5B2288ADD4300EB20D4 /* KoreanAutomata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanAutomata.swift; sourceTree = "<group>"; };
 		DFE6D8D0287EBD2800A45033 /* BasePaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePaddingLabel.swift; sourceTree = "<group>"; };
 		DFE6D8D2287EBD9C00A45033 /* ReviewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListView.swift; sourceTree = "<group>"; };
 		E11AAD6B287D4E11001B1F96 /* KeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
@@ -86,11 +88,10 @@
 		DFC51022287D46A6003D26B0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				DE15E65F28604278003DD2F5 /* ReviewListViewController.swift */,
 				DFE6D8D2287EBD9C00A45033 /* ReviewListView.swift */,
 				DFC5102B287D4CC8003D26B0 /* ReviewTableViewCell.swift */,
 				E11AAD6B287D4E11001B1F96 /* KeyboardViewController.swift */,
-				DE15E65F28604278003DD2F5 /* ViewController.swift */,
+				DE15E65F28604278003DD2F5 /* ReviewListViewController.swift */,
 				E11AAD6D287D5101001B1F96 /* KeyboardView.swift */,
 			);
 			path = Presentation;
@@ -110,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				DFC51025287D48B1003D26B0 /* Base */,
+				DFD8A5B2288ADD4300EB20D4 /* KoreanAutomata.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -196,9 +198,10 @@
 				DE15E66028604278003DD2F5 /* ReviewListViewController.swift in Sources */,
 				DFC5102C287D4CC8003D26B0 /* ReviewTableViewCell.swift in Sources */,
 				DFE6D8D3287EBD9C00A45033 /* ReviewListView.swift in Sources */,
-				DE15E66028604278003DD2F5 /* ViewController.swift in Sources */,
+				DE15E66028604278003DD2F5 /* ReviewListViewController.swift in Sources */,
 				E11AAD6C287D4E11001B1F96 /* KeyboardViewController.swift in Sources */,
 				DFC51027287D48CC003D26B0 /* BaseViewController.swift in Sources */,
+				DFD8A5B3288ADD4300EB20D4 /* KoreanAutomata.swift in Sources */,
 				E11AAD6E287D5101001B1F96 /* KeyboardView.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
