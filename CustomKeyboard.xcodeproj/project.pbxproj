@@ -18,6 +18,7 @@
 		DFE6D8D3287EBD9C00A45033 /* ReviewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE6D8D2287EBD9C00A45033 /* ReviewListView.swift */; };
 		E11AAD6C287D4E11001B1F96 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AAD6B287D4E11001B1F96 /* KeyboardViewController.swift */; };
 		E11AAD6E287D5101001B1F96 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AAD6D287D5101001B1F96 /* KeyboardView.swift */; };
+		E1641DDD288ADEFC0000AD52 /* KoreanAutomata.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1641DDC288ADEFC0000AD52 /* KoreanAutomata.swift */; };
 		E17122F52886785E00FDAF6C /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17122F42886785E00FDAF6C /* HTTPMethod.swift */; };
 		E17122F72886787C00FDAF6C /* ReviewEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17122F62886787C00FDAF6C /* ReviewEndPoint.swift */; };
 		E17122F92886791100FDAF6C /* EndPointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17122F82886791100FDAF6C /* EndPointType.swift */; };
@@ -44,6 +45,7 @@
 		DFE6D8D2287EBD9C00A45033 /* ReviewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListView.swift; sourceTree = "<group>"; };
 		E11AAD6B287D4E11001B1F96 /* KeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		E11AAD6D287D5101001B1F96 /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
+		E1641DDC288ADEFC0000AD52 /* KoreanAutomata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanAutomata.swift; sourceTree = "<group>"; };
 		E17122F42886785E00FDAF6C /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		E17122F62886787C00FDAF6C /* ReviewEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEndPoint.swift; sourceTree = "<group>"; };
 		E17122F82886791100FDAF6C /* EndPointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointType.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				DFC51025287D48B1003D26B0 /* Base */,
+				E1641DDC288ADEFC0000AD52 /* KoreanAutomata.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				E1B120992887956B00910E84 /* ProfileImageProvider.swift in Sources */,
 				E1712300288692D000FDAF6C /* ReviewAPIProvider.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
+				E1641DDD288ADEFC0000AD52 /* KoreanAutomata.swift in Sources */,
 				E17122F72886787C00FDAF6C /* ReviewEndPoint.swift in Sources */,
 				E171230528869A6100FDAF6C /* ReviewDataDTO.swift in Sources */,
 				DFE6D8D1287EBD2800A45033 /* BasePaddingLabel.swift in Sources */,
