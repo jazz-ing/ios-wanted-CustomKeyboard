@@ -82,8 +82,8 @@ class KeyboardAuto {
     }
     
     private var status: Status = .start {
-        willSet {
-            if newValue == .end {
+        didSet {
+            if status == .end {
                 status = .start
             }
         }
@@ -94,7 +94,7 @@ class KeyboardAuto {
         let input = queue.removeLast()
         
         if queue.count >= 1 {
-            let lastCharacter = queue.removeLast()
+            let lastCharacter = outputToDisplay.removeLast()
             status = modify(status: status, with: input, compare: lastCharacter)
             let string = fullfill(status: status, with: input, from: lastCharacter)
             outputToDisplay.append(string)
@@ -112,9 +112,13 @@ class KeyboardAuto {
         
         switch status {
         case .start:
-            break
+            if last != nil {
+                next = String(last!) + String(char)
+            }
         case .choSung:
-            break
+            if last != nil {
+                next = String(last!) + String(char)
+            }
         case .doubleChosung:
             guard let index = choSungList.firstIndex(of: char) else {
                 return next
@@ -125,41 +129,60 @@ class KeyboardAuto {
             guard let last = last else {
                 return next
             }
+            
+            if jungSungList.contains(last) {
+                next = String(last) + String(next)
+                return next
+            }
+            
+            // ㄱㅏ
+            // 감ㅏ
             if choSungList.contains(last) {
-                if outputToDisplay.count > 2 {
-                    let lastCharacter = outputToDisplay.removeLast()
-                    var decomposed = decompose(char: lastCharacter)
-                    decomposed.removeLast()
-                    let jungsung = decomposed.removeLast()
-                    let chosung = decomposed.removeLast()
-                    next = String(compose(choSung: chosung, jungSung: jungsung, jongSung: nil)!) + String(compose(choSung: last, jungSung: char, jongSung: nil)!)
-                    return next
-                }
                 next = String(compose(choSung: last, jungSung: char, jongSung: nil)!)
+                return next
+            }
+            var decomposed = decompose(char: last)
+            let jongsung = decomposed.removeLast()
+            let jungsung = decomposed.removeLast()
+            let chosung = decomposed.removeLast()
+            if choSungList.contains(jongsung) {
+                next = String(compose(choSung: chosung, jungSung: jungsung, jongSung: nil)!) + String(compose(choSung: jongsung, jungSung: char, jongSung: nil)!)
             } else {
-                guard let lastPartOfDecomposedCharacter = decompose(char: last).last else {
-                    return next
-                }
-                // 겹종성인 경우 고려해서 여기에 추가하여, 아래의코드와 합쳐서 새로 만들기.
-                // if lastPartOfDecomposedCharacter
-                if jongSungList.contains(lastPartOfDecomposedCharacter),
-                   choSungList.contains(lastPartOfDecomposedCharacter) {
-//                    takeJongsung(to: <#T##Character#>, from: <#T##Character#>)
-                }
+                let index = combinedJongSungList.values.firstIndex(of: jongsung)!
+                var combinedJongsungCharacter = combinedJongSungList[index].key
+                let secondCombinedCharacter = combinedJongsungCharacter.removeLast()
+                let firstCombinedCharacter = combinedJongsungCharacter.removeLast()
+                next = String(compose(choSung: chosung, jungSung: jungsung, jongSung: firstCombinedCharacter)!) + String(compose(choSung: secondCombinedCharacter, jungSung: char, jongSung: nil)!)
             }
         case .combinedJungsung:
-            let jungsung = String([last!, char])
+            var decomposed = decompose(char: last!)
+            _ = decomposed.removeLast()
+            let lastJungsung = decomposed.removeLast()
+            let jungsung = String([lastJungsung, char])
+            let chosung = decomposed.removeLast()
             let combinedJungsung = combinedJungSungList[jungsung]!
-            return String(compose(choSung: outputToDisplay.removeLast(), jungSung: combinedJungsung, jongSung: nil)!)
-            // 갬ㅣ
+            return String(compose(choSung: chosung, jungSung: combinedJungsung, jongSung: nil)!)
+            // 새로 들어온 애가 종성이다.
+            // 가 / 개
+            // 각
+            // 각ㄱ
+            // 각ㄴ
+            // 갃
         case .jongSung:
-            var decomposed = decompose(char: outputToDisplay.removeLast())
+            var decomposed = decompose(char: last!)
+            _ = decomposed.removeLast()
             let jungsung = decomposed.removeLast()
             let chosung = decomposed.removeLast()
             next = String(compose(choSung: chosung, jungSung: jungsung, jongSung: char)!)
         case .combinedJongsung:
-            let combinedJongsung = String([last!, char])
-            return String(combinedJongSungList[combinedJongsung]!)
+            var decomposed = decompose(char: last!)
+            let jongsung = decomposed.removeLast()
+            let jungsung = decomposed.removeLast()
+            let chosung = decomposed.removeLast()
+            let combinedJongsungCharacter = String([jongsung, char])
+            if let combinedJongsung = combinedJongSungList[combinedJongsungCharacter] {
+                next = String(compose(choSung: chosung, jungSung: jungsung, jongSung: combinedJongsung)!)
+            }
         case .end:
             break
         }
@@ -176,6 +199,8 @@ class KeyboardAuto {
                     return Status.jungSung
                 }
                 return Status.end
+            } else if last == char {
+                return Status.doubleChosung
             } else {
                 return Status.choSung
             }
@@ -198,35 +223,61 @@ class KeyboardAuto {
             return Status.end
             
         case .jungSung:
-            if jongSungList.contains(char) {
+            if jungSungList.contains(last!) {
+                return Status.choSung
+            } else if jongSungList.contains(char) {
                 return Status.jongSung
-            } else if let last = last, // 틀린코드, last를 분해하여 검사해야 함
-                      isCanBeCombinedJungSung(with: "\(last)\(char)") {
-                return Status.combinedJungsung
+            } else if let last = last {
+                if jungSungList.contains(last) {
+                    return Status.jungSung
+                }
+                var decomposed = decompose(char: last)
+                decomposed.removeLast()
+                let lastJungsung = decomposed.last
+                if isCanBeCombinedJungSung(with: "\(lastJungsung!)\(char)") {
+                    return Status.combinedJungsung
+                }
+                return Status.end
             } else {
                 return Status.end
             }
-
         case .combinedJungsung:
             if jongSungList.contains(char) {
                 return Status.jongSung
-            } else if let last = last,
-                      isCanBeCombinedJungSung(with: "\(char)\(last)") {
-                return Status.combinedJungsung
+            } else if let last = last {
+                var decomposed = decompose(char: last)
+                _ = decomposed.removeLast()
+                let lastJungsung = decomposed.removeLast()
+                if isCanBeCombinedJungSung(with: "\(lastJungsung)\(char)") {
+                    return Status.combinedJungsung
+                }
+                return Status.end
             } else {
                 return Status.end
             }
 
         case .jongSung:
+            var decomposed = decompose(char: last!)
+            let jongsung = decomposed.removeLast()
             if jungSungList.contains(char) {
                 return Status.jungSung
-            } else if combinedJongsungPossibleList.contains(last!) {
-                return Status.combinedJongsung
+            } else if combinedJongsungPossibleList.contains(jongsung) {
+                let combinedJongsungCharacter = String(jongsung) + String(char)
+                if let combinedJongsung = combinedJongSungList[combinedJongsungCharacter] {
+                    return Status.combinedJongsung
+                }
+                if jongsung == char {
+                    return Status.choSung
+                }
+                return Status.choSung
             } else {
                 return Status.end
             }
 
         case .combinedJongsung:
+            if jungSungList.contains(char) {
+                return Status.jungSung
+            }
             return Status.end
 
         case .end:
@@ -237,14 +288,13 @@ class KeyboardAuto {
     func insert(_ input: String) {
         inputContents.append(input)
     }
-    
+
     func reset() {
         inputContents.removeAll()
     }
     
     private func isCanBeCombinedJungSung(with vowels: String) -> Bool {
-        let temp = String(vowels.sorted())
-        return combinedJungSungList.keys.contains(temp)
+        return combinedJungSungList.keys.contains(vowels)
     }
     
     private func takeJongsung(to char: Character, from last : Character) -> Character {
@@ -375,8 +425,6 @@ class KeyboardAuto {
                 UInt32(jongSungList.count) - jungSung
             ) / UInt32(jungSungList.count)
         )
-        print(choSung,jungSung,jongSung)
-        
         
         return "\(choSungList[Int(choSung)])\(jungSungList[Int(jungSung)])\(jongSungList[Int(jongSung)])"
     }
