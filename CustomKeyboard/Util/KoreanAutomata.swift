@@ -92,19 +92,30 @@ class KeyboardAuto {
     private func allocateHangeulStatus() {
         var queue = inputContents
         let input = queue.removeLast()
-        
-        if queue.count >= 1 {
+
+        if outputToDisplay.count >= 1 {
             let lastCharacter = outputToDisplay.removeLast()
             status = modify(status: status, with: input, compare: lastCharacter)
             let string = fullfill(status: status, with: input, from: lastCharacter)
             outputToDisplay.append(string)
-//            hangeulWithStatus.append((character, status))
         } else {
             status = modify(status: status, with: input)
             let character = fullfill(status: status, with: input)
             outputToDisplay.append(character)
-//            hangeulWithStatus.append((character, status))
         }
+        
+//        if queue.count >= 1 {
+//            let lastCharacter = outputToDisplay.removeLast()
+//            status = modify(status: status, with: input, compare: lastCharacter)
+//            let string = fullfill(status: status, with: input, from: lastCharacter)
+//            outputToDisplay.append(string)
+////            hangeulWithStatus.append((character, status))
+//        } else {
+//            status = modify(status: status, with: input)
+//            let character = fullfill(status: status, with: input)
+//            outputToDisplay.append(character)
+////            hangeulWithStatus.append((character, status))
+//        }
     }
 
     private func fullfill(status: Status, with char: Character, from last : Character? = nil) -> String {
@@ -293,8 +304,58 @@ class KeyboardAuto {
         inputContents.removeAll()
     }
     
+    func delete() {
+        var currentString = outputToDisplay
+        if outputToDisplay.count >= 1 {
+            // "ㄱ" "가" "각" "갅" "갂"
+            let lastCharacter = currentString.removeLast()
+            if choSungList.contains(lastCharacter) {
+                outputToDisplay.removeLast()
+                status = .start
+            } else {
+                // "가: "ㄱ" "ㅏ" " "
+                var decomposed = decompose(char: lastCharacter)
+                let jongsung = decomposed.removeLast()
+                let jungsung = decomposed.removeLast()
+                let chosung = decomposed.removeLast()
+                if jongsung == " " {
+                    outputToDisplay.removeLast()
+                    outputToDisplay.append(chosung)
+                    status = .choSung
+                    // "갅": "ㄱ" "ㅏ" "ㄴㅈ"
+                } else if isCombinedJongsung(with: jongsung) {
+                    var combinedJongsungCharacters = decompose(combinedJongsung: jongsung)
+                    let secondJongsung = combinedJongsungCharacters.removeLast()
+                    let firstJongsung = combinedJongsungCharacters.removeLast()
+                    let string = compose(choSung: chosung, jungSung: jungsung, jongSung: firstJongsung)
+                    outputToDisplay.removeLast()
+                    outputToDisplay.append(string!)
+                    status = .jongSung
+                } else {
+                    outputToDisplay.removeLast()
+                    let string = compose(choSung: chosung, jungSung: jungsung, jongSung: nil)
+                    outputToDisplay.append(string!)
+                    status = .jungSung
+                }
+            }
+        }
+    }
+    
     private func isCanBeCombinedJungSung(with vowels: String) -> Bool {
         return combinedJungSungList.keys.contains(vowels)
+    }
+    
+    private func isCombinedJongsung(with jongsung: Character) -> Bool {
+        if let index = combinedJongSungList.values.firstIndex(of: jongsung) {
+            return true
+        }
+        return false
+    }
+    
+    private func decompose(combinedJongsung: Character) -> String {
+        let index = combinedJongSungList.values.firstIndex(of: combinedJongsung)!
+        var combinedJongsungCharacter = combinedJongSungList[index].key
+        return combinedJongsungCharacter
     }
     
     private func takeJongsung(to char: Character, from last : Character) -> Character {

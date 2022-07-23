@@ -81,6 +81,13 @@ final class KeyboardView: UIView {
         button.layer.cornerRadius = Style.keyboardKeyCornerRaidus
         button.setImage(Style.deleteKeyImage, for: .normal)
         button.tintColor = .black
+        
+        button.addTarget(
+            nil,
+            action: #selector(deleteButtonTouched(_:)),
+            for: .touchUpInside
+        )
+        
         button.heightAnchor.constraint(equalToConstant: keyboardKeyHeight) .isActive  = true
         button.widthAnchor.constraint(equalTo: button.heightAnchor).isActive = true
         return button
@@ -165,8 +172,8 @@ final class KeyboardView: UIView {
         guard let contents = sender.titleLabel?.text else {
             return
         }
-
-        print(contents)
+        KeyboardAuto.shared.insert(contents)
+//        print(contents)
     }
 
     @objc func shiftButtonTouched(_ sender: UIButton) {
@@ -174,6 +181,10 @@ final class KeyboardView: UIView {
         toBeConvertedButtons.forEach {
             $0.isSelected.toggle()
         }
+    }
+    
+    @objc func deleteButtonTouched(_ sender: UIButton) {
+        KeyboardAuto.shared.delete()
     }
 
 }
