@@ -19,7 +19,14 @@ class KeyboardViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        keyboardView.returnKeyButton.addTarget(
+            self,
+            action: #selector(returnKeyButtonTouched(_:)),
+            for: .touchUpInside
+        )
     }
     
+    @objc func returnKeyButtonTouched(_ sender: UIButton) {
+        self.dismiss(animated: true)
+    }
 }

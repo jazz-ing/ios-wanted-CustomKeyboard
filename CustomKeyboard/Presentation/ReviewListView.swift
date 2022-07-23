@@ -38,7 +38,7 @@ final class ReviewListView: UIView {
         return label
     }()
 
-    private lazy var uploadButton: UIButton = {
+    lazy var uploadButton: UIButton = {
         let button = UIButton()
         guard let descriptor = UIFontDescriptor.preferredFontDescriptor(
             withTextStyle: .callout

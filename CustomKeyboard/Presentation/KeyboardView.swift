@@ -115,6 +115,8 @@ final class KeyboardView: UIView {
         button.setTitleColor(.black, for: .normal)
         button.setTitle(Text.spaceKey, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+        
+        button.addTarget(nil, action: #selector(spaceKeyButtonTouched(_:)), for: .touchUpInside)
 
         button.heightAnchor.constraint(equalToConstant: keyboardKeyHeight) .isActive  = true
         button.widthAnchor.constraint(
@@ -124,14 +126,14 @@ final class KeyboardView: UIView {
         return button
     }()
 
-    private lazy var returnKeyButton: UIButton = {
+    lazy var returnKeyButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .systemGray2
         button.layer.cornerRadius = Style.keyboardKeyCornerRaidus
         button.setTitleColor(.black, for: .normal)
         button.setImage(Style.returnKeyImage, for: .normal)
         button.tintColor = .black
-
+        
         button.heightAnchor
             .constraint(equalToConstant:keyboardKeyHeight).isActive  = true
         button.widthAnchor.constraint(
@@ -173,7 +175,7 @@ final class KeyboardView: UIView {
             return
         }
         KeyboardAuto.shared.insert(contents)
-//        print(contents)
+        textLabel.text = KeyboardAuto.shared.outputToDisplay
     }
 
     @objc func shiftButtonTouched(_ sender: UIButton) {
@@ -185,6 +187,12 @@ final class KeyboardView: UIView {
     
     @objc func deleteButtonTouched(_ sender: UIButton) {
         KeyboardAuto.shared.delete()
+        textLabel.text = KeyboardAuto.shared.outputToDisplay
+    }
+    
+    @objc func spaceKeyButtonTouched(_ sender: UIButton) {
+        KeyboardAuto.shared.space()
+        textLabel.text = KeyboardAuto.shared.outputToDisplay
     }
 
 }
@@ -449,7 +457,7 @@ extension KeyboardView {
 extension KeyboardView {
 
     private enum Text {
-        static let textLabelPlaceHolder: String = "ㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaaㅇslnaa"
+        static let textLabelPlaceHolder: String = "리뷰를 입력해주세요☺️"
         static let functionKey: String = "123"
         static let spaceKey: String = "스페이스"
     }

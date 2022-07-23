@@ -19,12 +19,22 @@ final class ReviewListViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        reviewListView.uploadButton.addTarget(
+            self,
+            action: #selector(uploadButtonTouched(_:)),
+            for: .touchUpInside
+        )
     }
 
     override func setupView() {
         setTableViewDelegate()
     }
-
+    
+    @objc func uploadButtonTouched(_ sender: UIButton) {
+        let keyboardViewController = KeyboardViewController()
+        keyboardViewController.modalPresentationStyle = .fullScreen
+        present(keyboardViewController, animated: true)
+    }
 }
 
 // MARK: - View setting methods

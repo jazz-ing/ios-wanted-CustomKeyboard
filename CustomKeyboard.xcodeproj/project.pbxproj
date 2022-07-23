@@ -88,10 +88,10 @@
 		DFC51022287D46A6003D26B0 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				DE15E65F28604278003DD2F5 /* ReviewListViewController.swift */,
 				DFE6D8D2287EBD9C00A45033 /* ReviewListView.swift */,
 				DFC5102B287D4CC8003D26B0 /* ReviewTableViewCell.swift */,
 				E11AAD6B287D4E11001B1F96 /* KeyboardViewController.swift */,
-				DE15E65F28604278003DD2F5 /* ReviewListViewController.swift */,
 				E11AAD6D287D5101001B1F96 /* KeyboardView.swift */,
 			);
 			path = Presentation;
@@ -110,8 +110,8 @@
 		DFC51024287D48A0003D26B0 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				DFC51025287D48B1003D26B0 /* Base */,
 				DFD8A5B2288ADD4300EB20D4 /* KoreanAutomata.swift */,
+				DFC51025287D48B1003D26B0 /* Base */,
 			);
 			path = Util;
 			sourceTree = "<group>";
